@@ -50,27 +50,6 @@ class AuthenticationController extends Controller
     // end
 
     // function buat handle penambal
-    public function penambalLogin(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required',
-            'device_name' => 'required|string',
-        ]);
-
-        $user = User::whereEmail($request->email)->first();
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => 'Alamat email atau password salah',
-            ]);
-        }
-
-        return [
-            'access_token' => $user->createToken($request->device_name)->plainTextToken,
-            'user' => $user,
-        ];
-    }
-
     public function penambalRegister(Request $request)
     {
         $request->validate([
